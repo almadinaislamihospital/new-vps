@@ -1,5 +1,8 @@
-# Use the base image
-From fredblgr/ubuntu-novnc:20.04
+FROM ubuntu:latest
+
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop
+
+RUN rm /run/reboot-required*
 
 # Expose the port on which NoVNC runs (80 inside the container)
 Expose 80
