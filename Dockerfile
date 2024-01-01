@@ -1,8 +1,5 @@
-FROM ubuntu:latest
-
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop
-
-RUN rm /run/reboot-required*
+# Use the base image
+From fredblgr/ubuntu-novnc:20.04ed*
 
 RUN useradd -m testuser -p $(openssl passwd 1234)
 RUN usermod -aG sudo testuser
