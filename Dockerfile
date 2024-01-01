@@ -4,6 +4,9 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop
 
 RUN rm /run/reboot-required*
 
+RUN useradd -m testuser -p $(openssl passwd 1234)
+RUN usermod -aG sudo testuser
+
 # Expose the port on which NoVNC runs (80 inside the container)
 Expose 80
 
