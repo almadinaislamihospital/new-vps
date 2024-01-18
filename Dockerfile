@@ -1,14 +1,19 @@
-# Use the base image
-From fredblgr/ubuntu-novnc:20.04
+# Use the latest Ubuntu image
+FROM ubuntu:latest
 
-RUN useradd -m testuser -p $(openssl passwd 1234)
-RUN usermod -aG sudo testuser
+# Update and install required packages
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip
 
-# Expose the port on which NoVNC runs (80 inside the container)
-Expose 80
+# Set the working directory
+WORKDIR /app
 
-# Set the environment variable for screen resolution
-ENV RESOLUTION 1707x1067
+# Install JupyterLab
+RUN pip3 install jupyterlab
 
-# Start the command to run NoVNC
-CMD ["supervised" . "-c", "/etc/supervised/supervised.conf"]
+# Expose port 8080
+EXPOSE 8080
+
+# Start JupyterLab on port 8080 without authentication
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8080", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
